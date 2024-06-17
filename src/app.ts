@@ -1,20 +1,14 @@
 import express from 'express';
+import bodyParser from 'body-parser';
+import router from './routes';
 
 const app = express();
-const port = 3000;
 
-app.use(express.json())
+app.use(bodyParser.json());
+app.use('/api', router);
 
-app.get('/', (req, res) => {
-    res.send('Hello, TypeScript Node Express!');
-});
+const PORT = process.env.PORT || 3000;
 
-app.post("/" , (req, res) => {
-    const {name , email} = req.body;
-    console.log(name, email);
-    res.send("POST request to the homepage");
-})
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
