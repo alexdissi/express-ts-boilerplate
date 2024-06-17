@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import {PrismaClient} from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret'; // Utilisez les variables d'environnement
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export const signUp = async (email: string, password: string) => {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -37,7 +37,5 @@ export const signIn = async (email: string, password: string) => {
         throw new Error('Invalid email or password');
     }
 
-    const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
-
-    return token;
+    return jwt.sign({userId: user.id}, JWT_SECRET, {expiresIn: '1h'});
 };

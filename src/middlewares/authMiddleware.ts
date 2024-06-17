@@ -12,8 +12,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     }
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        (req as any).user = decoded;
+        (req as any).user = jwt.verify(token, JWT_SECRET);
         next();
     } catch (error) {
         res.sendStatus(403);
